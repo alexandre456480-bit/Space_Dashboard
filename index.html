@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="zFinança - Dashboard financeiro premium com interface moderna e imersiva">
+    <title>zFinança | Dashboard</title>
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Apache ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-layer">
+        <div class="bg-gradient"></div>
+        <canvas id="particleCanvas"></canvas>
+        <div class="bg-orb bg-orb--1"></div>
+        <div class="bg-orb bg-orb--2"></div>
+        <div class="bg-orb bg-orb--3"></div>
+    </div>
+
+    <!-- Main Container Layout -->
+    <main class="dashboard-container" id="dashboardContainer">
+        <div class="container-inner">
+            
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <img src="logo1.webp" alt="Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2306d6f0\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M13 10V3L4 14h7v7l9-11h-7z\'/></svg>'">
+                    <span>Performance</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="nav-link active">
+                        <div class="icon-wrap"><i data-lucide="layout-dashboard"></i></div>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="Cadastro.html" class="nav-link">
+                        <div class="icon-wrap"><i data-lucide="plus-circle"></i></div>
+                        <span>Cadastro</span>
+                    </a>
+                    <a href="Dados.html" class="nav-link">
+                        <div class="icon-wrap"><i data-lucide="database"></i></div>
+                        <span>Dados</span>
+                    </a>
+                </nav>
+
+                <!-- Partícula decorativa fundo bottom -->
+                <div class="sidebar-glow"></div>
+
+                <!-- Rocket Image -->
+                <div class="rocket-wrapper"><img src="rocket.webp" alt="Foguete" class="rocket-image"></div>
+            </aside>
+
+            <!-- Main Space -->
+            <div class="main-content">
+                
+                <!-- Transparent Header (Ajustado) -->
+                <header class="header">
+                    <div class="header-title" style="font-size: 1.3rem;">
+                        Dashboard <span style="opacity:0.5; font-weight:400;">| Visão Geral</span>
+                    </div>
+
+                    <div class="header-profile">
+                        <span class="profile-name">Maria Clara</span>
+                        <div class="profile-img">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Avatar Maria Clara">
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Page content (Dashboard Grid) -->
+                <div class="page-content" id="dashboardScrollArea">
+                    <div class="dashboard-wrapper">
+                        
+                        <!-- ESTRUTURA 1: CARDS -->
+                        <div class="summary-cards">
+                            
+                            <!-- Card Saldo -->
+                            <div class="clay-card saldo-card">
+                                <div class="card-header">
+                                    <div class="icon-box yellow"><i data-lucide="wallet"></i></div>
+                                    <h3 class="card-title">Saldo Atual</h3>
+                                </div>
+                                <div class="card-value font-mono" id="valSaldo">R$ 0,00</div>
+                                <div class="card-indicator">
+                                    <span class="ind-badge positive" id="indSaldo">
+                                        <i data-lucide="trending-up" width="14"></i> <span class="calc-val">+R$ 0,00</span>
+                                    </span>
+                                    <span class="ind-text">este mês</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Receita -->
+                            <div class="clay-card receita-card">
+                                <div class="card-header">
+                                    <div class="icon-box green"><i data-lucide="badge-dollar-sign"></i></div>
+                                    <h3 class="card-title">Total Receitas</h3>
+                                </div>
+                                <div class="card-value font-mono" id="valReceita">R$ 0,00</div>
+                                <div class="card-indicator">
+                                    <span class="ind-badge positive" id="indReceita">
+                                        <i data-lucide="trending-up" width="14"></i> <span class="calc-val">+R$ 0,00</span>
+                                    </span>
+                                    <span class="ind-text">este mês</span>
+                                </div>
+                            </div>
+
+                            <!-- Card Despesa -->
+                            <div class="clay-card despesa-card">
+                                <div class="card-header">
+                                    <div class="icon-box red"><i data-lucide="banknote-arrow-down"></i></div>
+                                    <h3 class="card-title">Total Despesas</h3>
+                                </div>
+                                <div class="card-value font-mono" id="valDespesa">R$ 0,00</div>
+                                <div class="card-indicator">
+                                    <span class="ind-badge negative" id="indDespesa">
+                                        <i data-lucide="trending-down" width="14"></i> <span class="calc-val">-R$ 0,00</span>
+                                    </span>
+                                    <span class="ind-text">este mês</span>
+                                </div>
+                            </div>
+
+                        </div> <!-- end cards -->
+
+                        <!-- Astronauta Image (Independente) -->
+                        <div class="astronaut-wrapper"><img src="astronauta.webp" alt="Astronauta" class="astronaut-image"></div>
+
+                        <!-- ESTRUTURA 2: KPI & AREA -->
+                        <div class="dash-grid-top">
+                            <!-- Area Chart (Receita vs Despesa) -->
+                            <div class="clay-card area-card">
+                                <div class="card-header spaced">
+                                    <h3 class="card-title">Receita vs Despesa</h3>
+                                    <!-- Filtro de Tempo -->
+                                    <div class="time-filter" id="areaFilter">
+                                        <button class="filter-btn active" data-range="day">Dias</button>
+                                        <button class="filter-btn" data-range="week">Semanas</button>
+                                        <button class="filter-btn" data-range="month">Meses</button>
+                                        <button class="filter-btn" data-range="year">Anos</button>
+                                    </div>
+                                </div>
+                                <div class="chart-container" id="chartArea"></div>
+                            </div>
+
+                            <!-- Speedometer KPI -->
+                            <div class="clay-card kpi-card">
+                                <div class="planet-wrapper"><img src="planet.webp" alt="Planeta" class="planet-image"></div>
+                                <h3 class="card-title centered">Performance Geral</h3>
+                                <div class="chart-container" id="chartKpi"></div>
+                                <p class="kpi-subtitle">Crescimento Mensal (%)</p>
+                            </div>
+                        </div>
+
+                        <!-- ESTRUTURA 3: PIE & BAR -->
+                        <div class="dash-grid-bottom">
+                            <!-- Pizza: Categorias -->
+                            <div class="clay-card pie-card">
+                                <div class="card-header spaced">
+                                    <h3 class="card-title">Categorias</h3>
+                                    <!-- Filtro Tipo -->
+                                    <div class="type-filter" id="pieFilter">
+                                        <button class="filter-btn active" data-type="receita">Receitas</button>
+                                        <button class="filter-btn" data-type="despesa">Despesas</button>
+                                    </div>
+                                </div>
+                                <div class="chart-container" id="chartPie"></div>
+                            </div>
+
+                            <!-- Bar: SubCategorias -->
+                            <div class="clay-card bar-card">
+                                <div class="card-header spaced">
+                                    <h3 class="card-title">SubCategorias</h3>
+                                    <div class="type-filter" id="barFilter">
+                                        <button class="filter-btn active" data-type="receita">Receitas</button>
+                                        <button class="filter-btn" data-type="despesa">Despesas</button>
+                                    </div>
+                                </div>
+                                <div class="chart-container" id="chartBar"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        // Init Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

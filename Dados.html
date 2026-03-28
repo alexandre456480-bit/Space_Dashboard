@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zFinança | Dados Ocultos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-layer">
+        <div class="bg-gradient"></div>
+        <canvas id="particleCanvas"></canvas>
+        <div class="bg-orb bg-orb--1"></div>
+        <div class="bg-orb bg-orb--2"></div>
+        <div class="bg-orb bg-orb--3"></div>
+    </div>
+
+    <!-- Main Container Layout Base -->
+    <main class="dashboard-container" id="dashboardContainer">
+        <div class="container-inner">
+            
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <img src="logo1.webp" alt="" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%2306d6f0\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M13 10V3L4 14h7v7l9-11h-7z\'/></svg>'">
+                    <span>Performance</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <a href="index.html" class="nav-link">
+                        <div class="icon-wrap"><i data-lucide="layout-dashboard"></i></div>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="Cadastro.html" class="nav-link">
+                        <div class="icon-wrap"><i data-lucide="plus-circle"></i></div>
+                        <span>Cadastro</span>
+                    </a>
+                    <a href="Dados.html" class="nav-link active">
+                        <div class="icon-wrap"><i data-lucide="database"></i></div>
+                        <span>Dados</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-glow"></div>
+            </aside>
+
+            <!-- Main Space -->
+            <div class="main-content">
+                
+                <!-- Transparent Header -->
+                <header class="header">
+                    <div class="header-title">
+                        Dashboard <span style="opacity:0.5; font-weight:400;">| Registros</span>
+                    </div>
+
+                    <div class="header-profile">
+                        <span class="profile-name">Maria Clara</span>
+                        <div class="profile-img">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Avatar Maria Clara">
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Page scrollable list -->
+                <div class="page-content" id="listContent">
+                    <div class="data-header-actions">
+                        <h2 style="font-weight: 500; font-size: 1.5rem;">Seus Dados</h2>
+                        
+                        <div class="action-buttons">
+                            <!-- Hidden input for importing CSV -->
+                            <input type="file" id="importCsvInput" accept=".csv" style="display:none;" onchange="importCSV(event)">
+                            <button class="btn-outline" onclick="document.getElementById('importCsvInput').click()">
+                                <i data-lucide="upload-cloud" width="18"></i> Importar CSV
+                            </button>
+                            <button class="btn-outline" onclick="exportCSV()">
+                                <i data-lucide="download-cloud" width="18"></i> Exportar CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="data-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                    <th style="width: 60px; text-align:center;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', loadTableData);
+    </script>
+</body>
+</html>
